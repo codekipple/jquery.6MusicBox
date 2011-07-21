@@ -141,6 +141,7 @@
       },
       
       secondStage: function( anchor ){
+        var properties = {};
         // set this transition as the last transition
         parentEl.data('slideReveal', {
            lastTransition : settings.transitionName
@@ -150,7 +151,6 @@
           $.fn.slideReveal.setAnchor( el, anchor )
         }
         // final animation
-        var properties = {};
         properties[settings.dimention] = endPosition + 'px';
         el.animate( properties,  400, function(){
           // animation finished
