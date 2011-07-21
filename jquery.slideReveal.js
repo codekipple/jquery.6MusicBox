@@ -194,7 +194,6 @@
             animation.secondStage( status );
         }
     );
-
         
   };
   
@@ -296,26 +295,4 @@
     }
   }  
   
-})( jQuery );
-
-/*
- * run plugin
- */
-(function( $ ){
-  $(document).ready(function(){
-  
-    $('#box1').sixMusicBox({
-      transition: 'slideUp-slideDown',
-      startingPosition: 'bottom'
-    });
-    $('#box2').sixMusicBox({
-      transition: 'slideRight-slideLeft',
-      startingPosition: 'left'
-    });
-    $('#box3').sixMusicBox({
-      transition: 'slideDown-slideRight',
-      startingPosition: 'right'
-    });
-
-  });
 })( jQuery );

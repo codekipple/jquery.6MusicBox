@@ -13,6 +13,29 @@
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
   <script src="jquery.slideReveal.js"></script>
+  <script>
+    /*
+     * run plugin
+     */
+    (function( $ ){
+      $(document).ready(function(){
+      
+        $('#box1').sixMusicBox({
+          transition: 'slideUp-slideDown',
+          startingPosition: 'bottom'
+        });
+        $('#box2').sixMusicBox({
+          transition: 'slideRight-slideLeft',
+          startingPosition: 'left'
+        });
+        $('#box3').sixMusicBox({
+          transition: 'slideDown-slideRight',
+          startingPosition: 'right'
+        });
+
+      });
+    })( jQuery );
+  </script>
 </head>
 
 <body>
