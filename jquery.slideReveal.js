@@ -7,15 +7,14 @@
     
     return this.each(function() {
 
-      var $this = $(this);      
-      // support for the meta data plugin if it's being used build element specific options
-      var o = $.meta ? $.extend({}, opts, $this.data()) : opts;
-      var mouseEnter = function(){};
-      var mouseLeave = function(){};
-      var transitionEvents = [];
+      var $this = $(this),
+          o = $.meta ? $.extend({}, opts, $this.data()) : opts, // support for the meta data plugin if it's being used build element specific options
+          mouseEnter = function(){},
+          mouseLeave = function(){},
+          transitionEvents = [],
+          $title = $this.find('.' + o.titleClass); // set the title element
       
-      // set the title element and hide the children within it except the first one
-      var $title = $this.find('.' + o.titleClass);
+      // hide the children within it except the first one
       $title.children().css('opacity', 0);
       $title.children(':first-child').css('opacity', 1);
       
@@ -26,30 +25,22 @@
           // need to set the last transition up at the beginning to avoid the random
           // transition from choosening a transition which will just move it to to where
           // it's currently already positioned
-          $this.data('slideReveal', {
-             lastTransition : 'slideUp'
-          });
+          $this.data('slideReveal', { lastTransition : 'slideUp' });
           $title.width( $this.width() );
           $title.height( o.startHeight );
           break;
         case 'bottom':
-          $this.data('slideReveal', {
-             lastTransition : 'slideDown'
-          });
+          $this.data('slideReveal', { lastTransition : 'slideDown' });
           $title.width( $this.width() );
           $title.height( o.startHeight );
           break;
         case 'left':
-          $this.data('slideReveal', {
-             lastTransition : 'slideLeft'
-          });
+          $this.data('slideReveal', { lastTransition : 'slideLeft' });
           $title.width( o.startWidth );
           $title.height( $this.height() );
           break;
         case 'right':
-          $this.data('slideReveal', {
-             lastTransition : 'slideRight'
-          });
+          $this.data('slideReveal', { lastTransition : 'slideRight' });
           $title.width( o.startWidth );
           $title.height( $this.height() );
           break;
@@ -99,15 +90,15 @@
   $.fn.slideReveal.animate = function( el, opts, settings ){
      
     el.stop(true); // stop all animation
-    var width = el.width();
-    var height = el.height();
-    var parentEl = el.parent();
-    var dfd = new jQuery.Deferred();    
-    // get the parent dimentions on each animation enabling the animation to still work if the boxes have been resized
-    var maxWidth = parentEl.width();
-    var maxHeight = parentEl.height();      
-    // the end width or height value is dependent on what event caused this animation ( mouseenter, mouseleave )
-    var endPosition = settings.mousePosition === 'enter' ? settings.endPosition : settings.startPosition;    
+    var width = el.width(),
+        height = el.height(),
+        parentEl = el.parent(),
+        dfd = new jQuery.Deferred(),    
+        // get the parent dimentions on each animation enabling the animation to still work if the boxes have been resized
+        maxWidth = parentEl.width(),
+        maxHeight = parentEl.height(),      
+        // the end width or height value is dependent on what event caused this animation ( mouseenter, mouseleave )
+        endPosition = settings.mousePosition === 'enter' ? settings.endPosition : settings.startPosition;    
     
     var animation = {
       
@@ -191,7 +182,7 @@
     },
     
     slideDown: function( el, mousePosition, opts ){ 
-      var settings = {}
+      var settings = {};
       settings.startPosition = opts.startHeight;
       settings.endPosition = opts.endHeight;
       settings.mousePosition = mousePosition;
@@ -202,7 +193,7 @@
     },
       
     slideLeft: function( el, mousePosition, opts ){
-      var settings = {}
+      var settings = {};
       settings.startPosition = opts.startWidth;
       settings.endPosition = opts.endWidth;
       settings.mousePosition = mousePosition;
@@ -213,7 +204,7 @@
     },
     
     slideRight: function( el, mousePosition, opts ){
-      var settings = {}
+      var settings = {};
       settings.startPosition = opts.startWidth;
       settings.endPosition = opts.endWidth;
       settings.mousePosition = mousePosition;
@@ -224,10 +215,10 @@
     },
     
     random: function( el, mousePosition, opts ){    
-      var transitions = [];
-      var randomnumber = 0;
-      var data = {};
-      var lastTransition = '';
+      var transitions = [],
+          randomnumber = 0,
+          data = {},
+          lastTransition = '';          
       //retreive last transition
       data = el.parent().data('slideReveal');
       lastTransition = data.lastTransition;
