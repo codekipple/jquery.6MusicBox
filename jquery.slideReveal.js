@@ -8,7 +8,7 @@
     return this.each(function() {
 
       var $this = $(this);      
-      // support for the meta data plugin fs it's being used build element specific options
+      // support for the meta data plugin if it's being used build element specific options
       var o = $.meta ? $.extend({}, opts, $this.data()) : opts;
       var mouseEnter = function(){};
       var mouseLeave = function(){};
@@ -93,8 +93,8 @@
   };
   
   /*
-   * this animation function handles both vertical and horizontal transitions as well as the random one
-   * ( slideUp, slidDown, slideLeft, slideRight, random )
+   * this animation function handles both vertical and horizontal transitions
+   * ( slideUp, slidDown, slideLeft, slideRight )
    */
   $.fn.slideReveal.animate = function( el, opts, settings ){
      
