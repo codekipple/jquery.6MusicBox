@@ -107,6 +107,8 @@
     var width = el.width();
     var height = el.height();
     var parentEl = el.parent();
+    var dfd = new jQuery.Deferred();
+    
     /*
      * if we get the parent dimentions on each animation the animations will still work if the boxes have been resized
      */
@@ -119,62 +121,80 @@
      */
     var endPosition = settings.mousePosition === 'enter' ? settings.endPosition : settings.startPosition;
     
-    // log( settings.mousePosition );
+    
+    var animation = {
+      
+      firstStage: function(){
+      
+        var dfd = new $.Deferred();
         
-    if( width < maxWidth ){ // if true we are in a horizontal transition      
-      
-      if( settings.dimention == 'width' && el.css( settings.anchor ) === '0px'){
-        // we are already in horizontal mode and anchored to the correct position
-        // no need to go to maximum dimentions
-        finalPhase();
-      }else{
-        // the box is not acnhored correctly
-        // we need to adjust the dimentions to maximum
-        moveToMaximums( 'width', maxWidth );        
-      }
-      
-    }else if( height < maxHeight ) { // if true we are in a vertical transition      
-
-      if( settings.dimention == 'height' && el.css( settings.anchor ) === '0px' ){
-        finalPhase();
-      }else{    
-        // the box is not acnhored correctly
-        // we need to adjust the dimentions to maximum
-        moveToMaximums( 'height', maxHeight );
-      }
-      
-    }else{ 
-      // the width and height match the maximum values so we are free to move
-      // straight to the final phase
-      finalPhase( settings.anchor );
-    }
+        var moveToMaximums = function( dimention, maxDimention ){
+          // move block to maximum dimentions width and or height
+          var properties = {};
+          properties[dimention] = maxDimention + 'px';      
+          el.animate( properties,  400, function(){
+            dfd.resolve( settings.anchor );
+          });                   
+        };
     
-    function moveToMaximums( dimention, maxDimention ){
-      // move block to maximum dimentions width and or height
-      var properties = {};
-      properties[dimention] = maxDimention + 'px';      
-      el.animate( properties,  400, function(){
-        finalPhase( settings.anchor );
-      });
-    };
-    
-    function finalPhase( anchor ){ 
-      
-      parentEl.data('sixMusicBox', {
-         lastTransition : settings.transitionName
-      });
-           
-      // anchor if need be, then complete the final part of the animation
-      if( anchor != undefined ){
-        $.fn.sixMusicBox.setAnchor( el, anchor )
-      }
-      var properties = {};
-      properties[settings.dimention] = endPosition + 'px';
+        if( width < maxWidth ){ // if true we are in a horizontal transition      
+        
+          if( settings.dimention == 'width' && el.css( settings.anchor ) === '0px'){
+            // we are already in horizontal mode and anchored to the correct position
+            // no need to go to maximum dimentions
+            dfd.resolve();
+          }else{
+            // the box is not acnhored correctly
+            // we need to adjust the dimentions to maximum
+            moveToMaximums( 'width', maxWidth );        
+          }
+          
+        }else if( height < maxHeight ) { // if true we are in a vertical transition      
 
-      el.animate( properties,  400, function(){
-        // animation finished
-      });
-    }
+          if( settings.dimention == 'height' && el.css( settings.anchor ) === '0px' ){
+            dfd.resolve();
+          }else{    
+            // the box is not acnhored correctly
+            // we need to adjust the dimentions to maximum
+            moveToMaximums( 'height', maxHeight );
+          }
+          
+        }else{ 
+          // the width and height match the maximum values so we are free to move
+          // straight to the final phase
+          dfd.resolve( settings.anchor );
+        }
+        
+        return dfd.promise();
+        
+      },
+      
+      secondStage: function( anchor ){
+        // set this transition as the last one fired
+        parentEl.data('sixMusicBox', {
+           lastTransition : settings.transitionName
+        });
+             
+        // anchor if need be, then complete the final part of the animation
+        if( anchor != undefined ){
+          $.fn.sixMusicBox.setAnchor( el, anchor )
+        }
+        var properties = {};
+        properties[settings.dimention] = endPosition + 'px';
+
+        el.animate( properties,  400, function(){
+          // animation finished
+        });
+      },
+      
+    };  
+
+    $.when( animation.firstStage() ).then(
+        function(status){
+            animation.secondStage( status );
+        }
+    );
+
         
   };
   
@@ -283,6 +303,7 @@
  */
 (function( $ ){
   $(document).ready(function(){
+  
     $('#box1').sixMusicBox({
       transition: 'slideUp-slideDown',
       startingPosition: 'bottom'
@@ -295,5 +316,6 @@
       transition: 'slideDown-slideRight',
       startingPosition: 'right'
     });
+
   });
 })( jQuery );
