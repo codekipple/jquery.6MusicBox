@@ -1,4 +1,4 @@
-body{ background:#78b1b4; font-family:arial; }
+body{ background:#78b1b4; font-family:arial; padding:20px; }
 .six-music-box{ background:red; width:148px; height:145px; position:relative; float:left; margin:0 20px 0 0; }
 .info{ background:#fff; color:#333; height:35px; position:absolute; bottom:0; left:0; width:100%; font-size:12px; overflow:hidden; }
 .info h2{ font-size:12px; margin:0; padding:0; color:#ed5e18; padding:12px 13px 8px; margin:0; }

@@ -91,6 +91,7 @@
   $.fn.slideReveal.animate = function( el, opts, settings ){
      
     el.stop(true); // stop all animation
+    
     var width = el.width(),
         height = el.height(),
         parentEl = el.parent(),
@@ -99,23 +100,30 @@
         maxWidth = parentEl.width(),
         maxHeight = parentEl.height(),      
         // the end width or height value is dependent on what event caused this animation ( mouseenter, mouseleave )
-        endPosition = settings.mousePosition === 'enter' ? settings.endPosition : settings.startPosition;   
+        endPosition = settings.mousePosition === 'enter' ? settings.endPosition : settings.startPosition,  
         speed = settings.mousePosition === 'enter' ? opts.hoverSpeed : opts.resetSpeed;
+    
+    opts.children.hide();
     
     var animation = {
       
       firstStage: function(){
+        clearTimeout( el.timeout ); // clear the timout from the element
         // uses deffered to let the animation know when it's ready to move to secoundStage
         var dfd = new $.Deferred();
-        
-        opts.children.hide();
         
         var moveToMaximums = function( dimention, maxDimention ){ // move to maximum width and or height
           var properties = {};
           properties[dimention] = maxDimention + 'px';      
           el.animate( properties,  speed, function(){
             // allow for a small delay before going into the final phase for extra finesse
-            setTimeout(function() {
+            // this timneout was causing issues
+            /*
+            to be able to clear the timeout i had to add the timeout as a variable to the element,
+            if i just had it as a local variable to this function i could not clear the timeout
+            as new versions of this function were being created i think
+            */
+            el.timeout = setTimeout(function() {
               dfd.resolve( settings.anchor );
             }, opts.maxDelay);
           });                   
@@ -147,7 +155,8 @@
         
       },
       
-      secondStage: function( anchor ){
+      secondStage: function( anchor, calledBy ){
+        
         var properties = {};
         // set this transition as the last transition
         parentEl.data('slideReveal', {
@@ -160,7 +169,9 @@
         // final animation
         properties[settings.dimention] = endPosition + 'px';
         el.animate( properties,  speed, function(){
-          opts.children.fadeIn( opts.textFade );
+          if( settings.mousePosition === 'enter' ){
+            opts.children.fadeIn( opts.textFade );
+          }
         });        
       },
       
