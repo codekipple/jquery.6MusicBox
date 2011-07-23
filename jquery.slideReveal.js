@@ -12,11 +12,12 @@
           mouseEnter = function(){},
           mouseLeave = function(){},
           transitionEvents = [],
-          $title = $this.find('.' + o.titleClass); // set the title element
+          $title = $this.find('.' + o.titleClass), // set the title element
+          $children = $title.children().not(':first-child'); // get all children except the first element
       
-      // hide the children within it except the first one
-      $title.children().css('opacity', 0);
-      $title.children(':first-child').css('opacity', 1);
+      // hide the children
+      $children.hide();      
+      o.children = $children; // store children for later use in animation function
       
       // initialise boxes, setting anchor and dimentions
       $.fn.slideReveal.setAnchor( $title, o.startingPosition );      
@@ -98,7 +99,8 @@
         maxWidth = parentEl.width(),
         maxHeight = parentEl.height(),      
         // the end width or height value is dependent on what event caused this animation ( mouseenter, mouseleave )
-        endPosition = settings.mousePosition === 'enter' ? settings.endPosition : settings.startPosition;    
+        endPosition = settings.mousePosition === 'enter' ? settings.endPosition : settings.startPosition;   
+        speed = settings.mousePosition === 'enter' ? opts.hoverSpeed : opts.resetSpeed;
     
     var animation = {
       
@@ -106,11 +108,16 @@
         // uses deffered to let the animation know when it's ready to move to secoundStage
         var dfd = new $.Deferred();
         
+        opts.children.hide();
+        
         var moveToMaximums = function( dimention, maxDimention ){ // move to maximum width and or height
           var properties = {};
           properties[dimention] = maxDimention + 'px';      
-          el.animate( properties,  400, function(){
-            dfd.resolve( settings.anchor );
+          el.animate( properties,  speed, function(){
+            // allow for a small delay before going into the final phase for extra finesse
+            setTimeout(function() {
+              dfd.resolve( settings.anchor );
+            }, opts.maxDelay);
           });                   
         };
     
@@ -152,8 +159,8 @@
         }
         // final animation
         properties[settings.dimention] = endPosition + 'px';
-        el.animate( properties,  400, function(){
-          // animation finished
+        el.animate( properties,  speed, function(){
+          opts.children.fadeIn( opts.textFade );
         });        
       },
       
@@ -243,7 +250,11 @@
     startHeight: '27',
     endHeight: '50',
     transition: 'slideUp-slideDown', // combination of (slideUp, slideDown, slideLeft, slideRight, random) e.g top-bottom
-    startingPosition: 'bottom'
+    startingPosition: 'bottom',
+    hoverSpeed: 200,
+    resetSpeed: 200,
+    maxDelay: 90,
+    textFade: 100
   };
   
   function log() {
