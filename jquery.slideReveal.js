@@ -53,11 +53,11 @@
       mouseLeave = $.fn.slideReveal.transitions[ transitionEvents[1] ];;
       
       // bind events to the title
-      $this.bind('mouseenter', function(){
+      $this.bind('mouseenter.slideReveal', function(){
           mouseEnter( $title, 'enter', o );
       });
       
-      $this.bind('mouseleave', function(){
+      $this.bind('mouseleave.slideReveal', function(){
           mouseLeave( $title, 'leave', o );
       });
       
