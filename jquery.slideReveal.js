@@ -13,11 +13,13 @@
           mouseLeave = function(){},
           transitionEvents = [],
           $title = $this.find('.' + o.titleClass), // set the title element
-          $children = $title.children().not(':first-child'); // get all children except the first element
-      
+          $children = $title.children().not(':first-child'), // get all children except the first element
+          $img = $this.find('.' + o.bgClass ); 
+    
       // hide the children
       $children.hide();      
-      o.children = $children; // store children for later use in animation function
+      //o.children = $children; // store children for later use in animation function
+      //o.img = $img;
       
       // initialise boxes, setting anchor and dimentions
       $.fn.slideReveal.setAnchor( $title, o.startingPosition );      
@@ -54,11 +56,11 @@
       
       // bind events to the title
       $this.bind('mouseenter.slideReveal', function(){
-          mouseEnter( $title, 'enter', o );
+          mouseEnter( $title, 'enter', o, $children );
       });
       
       $this.bind('mouseleave.slideReveal', function(){
-          mouseLeave( $title, 'leave', o );
+          mouseLeave( $title, 'leave', o, $children );
       });
       
     });
@@ -88,7 +90,7 @@
    * this animation function handles both vertical and horizontal transitions
    * ( slideUp, slidDown, slideLeft, slideRight )
    */
-  $.fn.slideReveal.animate = function( el, opts, settings ){
+  $.fn.slideReveal.animate = function( el, opts, settings, $children ){
      
     el.stop(true); // stop all animation
     
@@ -103,7 +105,7 @@
         endPosition = settings.mousePosition === 'enter' ? settings.endPosition : settings.startPosition,  
         speed = settings.mousePosition === 'enter' ? opts.hoverSpeed : opts.resetSpeed;
     
-    opts.children.hide();
+    $children.hide();
     
     var animation = {
       
@@ -124,6 +126,8 @@
             as new versions of this function were being created i think
             */
             el.timeout = setTimeout(function() {
+              //need to position the img here ready for animating on the reveal
+              //$.fn.slideReveal.setAnchor( o.img, o.startingPosition );
               dfd.resolve( settings.anchor );
             }, opts.maxDelay);
           });                   
@@ -153,7 +157,7 @@
         
         return dfd.promise();
         
-      },
+      }, // firstStage
       
       secondStage: function( anchor, calledBy ){
         
@@ -170,12 +174,13 @@
         properties[settings.dimention] = endPosition + 'px';
         el.animate( properties,  speed, function(){
           if( settings.mousePosition === 'enter' ){
-            opts.children.fadeIn( opts.textFade );
+            $children.fadeIn( opts.textFade );
           }
-        });        
-      },
+        }); 
+        
+      }, //secondStage
       
-    };  
+    }; //animation
     
     // wait for first stage and when ready move onto the second
     $.when( animation.firstStage() ).then(
@@ -188,7 +193,7 @@
   
   $.fn.slideReveal.transitions = {
   
-    slideUp: function( el, mousePosition, opts ){       
+    slideUp: function( el, mousePosition, opts, $children ){       
       var settings = {};
       settings.startPosition = opts.startHeight;
       settings.endPosition = opts.endHeight;
@@ -196,10 +201,10 @@
       settings.anchor = 'top';
       settings.dimention = 'height';
       settings.transitionName = 'slideUp';
-      $.fn.slideReveal.animate( el, opts, settings );
+      $.fn.slideReveal.animate( el, opts, settings, $children );
     },
     
-    slideDown: function( el, mousePosition, opts ){ 
+    slideDown: function( el, mousePosition, opts, $children ){ 
       var settings = {};
       settings.startPosition = opts.startHeight;
       settings.endPosition = opts.endHeight;
@@ -207,10 +212,10 @@
       settings.anchor = 'bottom';
       settings.dimention = 'height';  
       settings.transitionName = 'slideDown';      
-      $.fn.slideReveal.animate( el, opts, settings );
+      $.fn.slideReveal.animate( el, opts, settings, $children );
     },
       
-    slideLeft: function( el, mousePosition, opts ){
+    slideLeft: function( el, mousePosition, opts, $children ){
       var settings = {};
       settings.startPosition = opts.startWidth;
       settings.endPosition = opts.endWidth;
@@ -218,10 +223,10 @@
       settings.anchor = 'left';
       settings.dimention = 'width';
       settings.transitionName = 'slideLeft';
-      $.fn.slideReveal.animate( el, opts, settings );
+      $.fn.slideReveal.animate( el, opts, settings, $children );
     },
     
-    slideRight: function( el, mousePosition, opts ){
+    slideRight: function( el, mousePosition, opts, $children ){
       var settings = {};
       settings.startPosition = opts.startWidth;
       settings.endPosition = opts.endWidth;
@@ -229,10 +234,10 @@
       settings.anchor = 'right';
       settings.dimention = 'width';  
       settings.transitionName = 'slideRight';
-      $.fn.slideReveal.animate( el, opts, settings );
+      $.fn.slideReveal.animate( el, opts, settings, $children );
     },
     
-    random: function( el, mousePosition, opts ){    
+    random: function( el, mousePosition, opts, $children ){    
       var transitions = [],
           randomnumber = 0,
           data = {},
@@ -248,7 +253,7 @@
       });      
 
       randomnumber = Math.floor( Math.random() * transitions.length )
-      transitions[randomnumber]( el, mousePosition, opts );    
+      transitions[randomnumber]( el, mousePosition, opts, $children );    
     }
     
   }; // END: $.fn.slideReveal.transitions()
@@ -256,6 +261,7 @@
   // plugin defaults
   $.fn.slideReveal.defaults = {
     titleClass: 'info',
+    bgClass: 'bgimg',
     startWidth: '27',
     endWidth: '50',
     startHeight: '27',
