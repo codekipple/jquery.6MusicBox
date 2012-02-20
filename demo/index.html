@@ -7,19 +7,16 @@
 <head>
   <meta charset="utf-8">
   <title>6music boxes</title>
-  <meta name="description" content="u">
+  <meta name="description" content="6 music boxes jquery plugin">
   <meta name="author" content="ralcus">
   <link rel="stylesheet" href="style.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
   <script src="../jquery.sixMusicBox.js"></script>
   <script>
-    /*
-     * run plugin
-     */
     (function( $ ){
       $(document).ready(function(){
-      
-        $('#box1').sixMusicBox({
+
+        $('.up-down .six-music-box').sixMusicBox({
           transition: 'slideUp-slideDown',
           startingPosition: 'bottom',
           startWidth: '35',
@@ -27,24 +24,36 @@
           endHeight: '90',
           startHeight: '35'
         });
-        $('#box2').sixMusicBox({
-          transition: 'slideUp-slideDown',
+        
+        $('.down-up .six-music-box').sixMusicBox({
+          transition: 'slideDown-slideUp',
+          startingPosition: 'top',
+          startWidth: '35',
+          endWidth: '90',
+          endHeight: '90',
+          startHeight: '35'
+        });
+        
+        $('.left-down .six-music-box').sixMusicBox({
+          transition: 'slideLeft-slideDown',
           startingPosition: 'bottom',
           startWidth: '35',
           endWidth: '90',
           endHeight: '90',
           startHeight: '35'
         });
-        $('#box3').sixMusicBox({
-          transition: 'slideUp-slideDown',
-          startingPosition: 'bottom',
+        
+        $('.right-up .six-music-box').sixMusicBox({
+          transition: 'slideRight-slideUp',
+          startingPosition: 'top',
           startWidth: '35',
           endWidth: '90',
           endHeight: '90',
           startHeight: '35'
         });
-        $('.six-music-box').sixMusicBox({
-          transition: 'slideUp-slideDown',
+        
+        $('.frankensense .six-music-box').sixMusicBox({
+          transition: 'random-random',
           startingPosition: 'bottom',
           startWidth: '35',
           endWidth: '90',
@@ -58,43 +67,196 @@
 </head>
 
 <body>
+    
 
     
-  <div id="container">
-        
-    <div class="six-music-box" id="box1">
+  <header class="page-header">
+    <h1>6 Music Boxes</h1>
+    
+    <p>I liked a ui element from the <a href="http://www.bbc.co.uk/6music">BBC 6music website</a> so i decided to make a jquery plugin replicating it.</p>
+    <p>The original effect was done in flash and is no longer on their site. But i took a <a href="http://www.youtube.com/watch?v=wbjJRY115SA">video</a> of it before their site redesign</p>
+    <p>TODO: moving box content as the overlay animates</p>
+  </header>
+    
+  <section class="up-down clearfix">
+    <h1>Up - Down (Classic Style)</h1>
+    
+    <div class="six-music-box">
       <div class="info">
         <h2>Peel Power</h2>
         <p>Cerys has Hannah peel live in session.</p>        
       </div>
       <img class="bgimg" src="hannah-peel.jpg" alt="Hannah Peel" />
-    </div>
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
+      <div class="info">
+        <h2>Safety In Numbers</h2>
+        <p>Huey talks to Gang of Four guitarist Andy Gill.</p>
+      </div>
+      <img class="bgimg" src="huey-morgan.jpg" alt="Huey Morgan" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
+      <div class="info">
+        <h2>Freak Zone</h2>
+        <p>It's two hours of musical weirdness with Stuart. para</p>
+      </div>
+      <img class="bgimg" src="stuart-maconie.jpg" alt="Stuart Maconie" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
+      <div class="info">
+        <h2>In The 6 Mix</h2>
+        <p>French DJ Laurent Garnier takes on the decks</p>
+      </div>
+      <img class="bgimg" src="dj-laurent.jpg" alt="Dj Laurent" />
+    </div><!--.six-music-box -->
+  </section>
+  
+  <section class="down-up clearfix">
+    <h1>Down - Up</h1>
     
+    <div class="six-music-box">
+      <div class="info">
+        <h2>Peel Power</h2>
+        <p>Cerys has Hannah peel live in session.</p>        
+      </div>
+      <img class="bgimg" src="hannah-peel.jpg" alt="Hannah Peel" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
+      <div class="info">
+        <h2>Safety In Numbers</h2>
+        <p>Huey talks to Gang of Four guitarist Andy Gill.</p>
+      </div>
+      <img class="bgimg" src="huey-morgan.jpg" alt="Huey Morgan" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
+      <div class="info">
+        <h2>Freak Zone</h2>
+        <p>It's two hours of musical weirdness with Stuart. para</p>
+      </div>
+      <img class="bgimg" src="stuart-maconie.jpg" alt="Stuart Maconie" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
+      <div class="info">
+        <h2>In The 6 Mix</h2>
+        <p>French DJ Laurent Garnier takes on the decks</p>
+      </div>
+      <img class="bgimg" src="dj-laurent.jpg" alt="Dj Laurent" />
+    </div><!--.six-music-box -->
+  </section>
+  
+  <section class="left-down clearfix">
+    <h1>Left - Down</h1>
+    
+    <div class="six-music-box">
+      <div class="info">
+        <h2>Peel Power</h2>
+        <p>Cerys has Hannah peel live in session.</p>        
+      </div>
+      <img class="bgimg" src="hannah-peel.jpg" alt="Hannah Peel" />
+    </div><!--.six-music-box -->
+
     <div class="six-music-box" id="box2">
       <div class="info">
         <h2>Safety In Numbers</h2>
         <p>Huey talks to Gang of Four guitarist Andy Gill.</p>
       </div>
       <img class="bgimg" src="huey-morgan.jpg" alt="Huey Morgan" />
-    </div>
-    
-    <div class="six-music-box" id="box3">
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
       <div class="info">
         <h2>Freak Zone</h2>
         <p>It's two hours of musical weirdness with Stuart. para</p>
       </div>
       <img class="bgimg" src="stuart-maconie.jpg" alt="Stuart Maconie" />
-    </div>
-    
-    <div class="six-music-box" id="box4">
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
       <div class="info">
         <h2>In The 6 Mix</h2>
         <p>French DJ Laurent Garnier takes on the decks</p>
       </div>
       <img class="bgimg" src="dj-laurent.jpg" alt="Dj Laurent" />
-    </div>
-        
-  </div><!-- #container -->
+    </div><!--.six-music-box -->
+  </section>
+      
+  <section class="right-up clearfix">
+    <h1>Right - Up</h1>
     
+    <div class="six-music-box">
+      <div class="info">
+        <h2>Peel Power</h2>
+        <p>Cerys has Hannah peel live in session.</p>        
+      </div>
+      <img class="bgimg" src="hannah-peel.jpg" alt="Hannah Peel" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
+      <div class="info">
+        <h2>Safety In Numbers</h2>
+        <p>Huey talks to Gang of Four guitarist Andy Gill.</p>
+      </div>
+      <img class="bgimg" src="huey-morgan.jpg" alt="Huey Morgan" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
+      <div class="info">
+        <h2>Freak Zone</h2>
+        <p>It's two hours of musical weirdness with Stuart. para</p>
+      </div>
+      <img class="bgimg" src="stuart-maconie.jpg" alt="Stuart Maconie" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box">
+      <div class="info">
+        <h2>In The 6 Mix</h2>
+        <p>French DJ Laurent Garnier takes on the decks</p>
+      </div>
+      <img class="bgimg" src="dj-laurent.jpg" alt="Dj Laurent" />
+    </div><!--.six-music-box -->
+  </section>
+  
+  <section class="frankensense clearfix">
+    <h1>Frankenstein Mixture (random each time)</h1>
+    
+    <div class="six-music-box" class="franken1">
+      <div class="info">
+        <h2>Peel Power</h2>
+        <p>Cerys has Hannah peel live in session.</p>        
+      </div>
+      <img class="bgimg" src="hannah-peel.jpg" alt="Hannah Peel" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box" class="franken2">
+      <div class="info">
+        <h2>Safety In Numbers</h2>
+        <p>Huey talks to Gang of Four guitarist Andy Gill.</p>
+      </div>
+      <img class="bgimg" src="huey-morgan.jpg" alt="Huey Morgan" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box" class="franken3">
+      <div class="info">
+        <h2>Freak Zone</h2>
+        <p>It's two hours of musical weirdness with Stuart. para</p>
+      </div>
+      <img class="bgimg" src="stuart-maconie.jpg" alt="Stuart Maconie" />
+    </div><!--.six-music-box -->
+
+    <div class="six-music-box" class="franken4">
+      <div class="info">
+        <h2>In The 6 Mix</h2>
+        <p>French DJ Laurent Garnier takes on the decks</p>
+      </div>
+      <img class="bgimg" src="dj-laurent.jpg" alt="Dj Laurent" />
+    </div><!--.six-music-box -->
+  </section>
+        
 </body>
 </html>
