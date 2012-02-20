@@ -10,9 +10,8 @@
   <meta name="description" content="u">
   <meta name="author" content="ralcus">
   <link rel="stylesheet" href="style.css">
-  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
-  <script src="../jquery.slideReveal.js"></script>
+  <script src="../jquery.sixMusicBox.js"></script>
   <script>
     /*
      * run plugin
@@ -20,7 +19,7 @@
     (function( $ ){
       $(document).ready(function(){
       
-        $('#box1').slideReveal({
+        $('#box1').sixMusicBox({
           transition: 'slideUp-slideDown',
           startingPosition: 'bottom',
           startWidth: '35',
@@ -28,7 +27,7 @@
           endHeight: '90',
           startHeight: '35'
         });
-        $('#box2').slideReveal({
+        $('#box2').sixMusicBox({
           transition: 'slideUp-slideDown',
           startingPosition: 'bottom',
           startWidth: '35',
@@ -36,7 +35,7 @@
           endHeight: '90',
           startHeight: '35'
         });
-        $('#box3').slideReveal({
+        $('#box3').sixMusicBox({
           transition: 'slideUp-slideDown',
           startingPosition: 'bottom',
           startWidth: '35',
@@ -44,7 +43,7 @@
           endHeight: '90',
           startHeight: '35'
         });
-        $('.six-music-box').slideReveal({
+        $('.six-music-box').sixMusicBox({
           transition: 'slideUp-slideDown',
           startingPosition: 'bottom',
           startWidth: '35',

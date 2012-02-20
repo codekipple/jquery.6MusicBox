@@ -1,9 +1,9 @@
 (function( $ ){
 
-  $.fn.slideReveal = function( options ) {
+  $.fn.sixMusicBox = function( options ) {
     
     // build main options before element iteration
-    var opts = $.extend({}, $.fn.slideReveal.defaults, options);
+    var opts = $.extend({}, $.fn.sixMusicBox.defaults, options);
     
     return this.each(function() {
 
@@ -22,28 +22,28 @@
       //o.img = $img;
       
       // initialise boxes, setting anchor and dimentions
-      $.fn.slideReveal.setAnchor( $title, o.startingPosition );      
+      $.fn.sixMusicBox.setAnchor( $title, o.startingPosition );      
       switch( o.startingPosition ){
         case 'top':
           // need to set the last transition up at the beginning to avoid the random
           // transition from choosening a transition which will just move it to to where
           // it's currently already positioned
-          $this.data('slideReveal', { lastTransition : 'slideUp' });
+          $this.data('sixMusicBox', { lastTransition : 'slideUp' });
           $title.width( $this.width() );
           $title.height( o.startHeight );
           break;
         case 'bottom':
-          $this.data('slideReveal', { lastTransition : 'slideDown' });
+          $this.data('sixMusicBox', { lastTransition : 'slideDown' });
           $title.width( $this.width() );
           $title.height( o.startHeight );
           break;
         case 'left':
-          $this.data('slideReveal', { lastTransition : 'slideLeft' });
+          $this.data('sixMusicBox', { lastTransition : 'slideLeft' });
           $title.width( o.startWidth );
           $title.height( $this.height() );
           break;
         case 'right':
-          $this.data('slideReveal', { lastTransition : 'slideRight' });
+          $this.data('sixMusicBox', { lastTransition : 'slideRight' });
           $title.width( o.startWidth );
           $title.height( $this.height() );
           break;
@@ -51,15 +51,15 @@
       
       // set the trasnitions up for mouseenter and mouseleave functions      
       transitionEvents = o.transition.split('-');
-      mouseEnter = $.fn.slideReveal.transitions[ transitionEvents[0] ];
-      mouseLeave = $.fn.slideReveal.transitions[ transitionEvents[1] ];;
+      mouseEnter = $.fn.sixMusicBox.transitions[ transitionEvents[0] ];
+      mouseLeave = $.fn.sixMusicBox.transitions[ transitionEvents[1] ];;
       
       // bind events to the title
-      $this.bind('mouseenter.slideReveal', function(){
+      $this.bind('mouseenter.sixMusicBox', function(){
           mouseEnter( $title, 'enter', o, $children );
       });
       
-      $this.bind('mouseleave.slideReveal', function(){
+      $this.bind('mouseleave.sixMusicBox', function(){
           mouseLeave( $title, 'leave', o, $children );
       });
       
@@ -67,7 +67,7 @@
       
   };
       
-  $.fn.slideReveal.setAnchor = function( el, anchor ){
+  $.fn.sixMusicBox.setAnchor = function( el, anchor ){
     switch( anchor ){
       case 'top':
         el.css({ top : '0', bottom: 'auto', left: 'auto', right : 'auto' });
@@ -90,7 +90,7 @@
    * this animation function handles both vertical and horizontal transitions
    * ( slideUp, slidDown, slideLeft, slideRight )
    */
-  $.fn.slideReveal.animate = function( el, opts, settings, $children ){
+  $.fn.sixMusicBox.animate = function( el, opts, settings, $children ){
      
     el.stop(true); // stop all animation
     
@@ -127,7 +127,7 @@
             */
             el.timeout = setTimeout(function() {
               //need to position the img here ready for animating on the reveal
-              //$.fn.slideReveal.setAnchor( o.img, o.startingPosition );
+              //$.fn.sixMusicBox.setAnchor( o.img, o.startingPosition );
               dfd.resolve( settings.anchor );
             }, opts.maxDelay);
           });                   
@@ -163,12 +163,12 @@
         
         var properties = {};
         // set this transition as the last transition
-        parentEl.data('slideReveal', {
+        parentEl.data('sixMusicBox', {
            lastTransition : settings.transitionName
         });             
         // anchor if need be
         if( anchor != undefined ){
-          $.fn.slideReveal.setAnchor( el, anchor )
+          $.fn.sixMusicBox.setAnchor( el, anchor )
         }
         // final animation
         properties[settings.dimention] = endPosition + 'px';
@@ -189,9 +189,9 @@
         }
     );
         
-  }; // END: $.fn.slideReveal.animate()
+  }; // END: $.fn.sixMusicBox.animate()
   
-  $.fn.slideReveal.transitions = {
+  $.fn.sixMusicBox.transitions = {
   
     slideUp: function( el, mousePosition, opts, $children ){       
       var settings = {};
@@ -201,7 +201,7 @@
       settings.anchor = 'top';
       settings.dimention = 'height';
       settings.transitionName = 'slideUp';
-      $.fn.slideReveal.animate( el, opts, settings, $children );
+      $.fn.sixMusicBox.animate( el, opts, settings, $children );
     },
     
     slideDown: function( el, mousePosition, opts, $children ){ 
@@ -212,7 +212,7 @@
       settings.anchor = 'bottom';
       settings.dimention = 'height';  
       settings.transitionName = 'slideDown';      
-      $.fn.slideReveal.animate( el, opts, settings, $children );
+      $.fn.sixMusicBox.animate( el, opts, settings, $children );
     },
       
     slideLeft: function( el, mousePosition, opts, $children ){
@@ -223,7 +223,7 @@
       settings.anchor = 'left';
       settings.dimention = 'width';
       settings.transitionName = 'slideLeft';
-      $.fn.slideReveal.animate( el, opts, settings, $children );
+      $.fn.sixMusicBox.animate( el, opts, settings, $children );
     },
     
     slideRight: function( el, mousePosition, opts, $children ){
@@ -234,7 +234,7 @@
       settings.anchor = 'right';
       settings.dimention = 'width';  
       settings.transitionName = 'slideRight';
-      $.fn.slideReveal.animate( el, opts, settings, $children );
+      $.fn.sixMusicBox.animate( el, opts, settings, $children );
     },
     
     random: function( el, mousePosition, opts, $children ){    
@@ -243,10 +243,10 @@
           data = {},
           lastTransition = '';          
       //retreive last transition
-      data = el.parent().data('slideReveal');
+      data = el.parent().data('sixMusicBox');
       lastTransition = data.lastTransition;
       
-      $.each( $.fn.slideReveal.transitions, function(index, value) { 
+      $.each( $.fn.sixMusicBox.transitions, function(index, value) { 
         if( index != lastTransition && index != 'random' ){ // don't want to repeat a transition twice or load this transition
           transitions.push( value );
         }
@@ -256,10 +256,10 @@
       transitions[randomnumber]( el, mousePosition, opts, $children );    
     }
     
-  }; // END: $.fn.slideReveal.transitions()
+  }; // END: $.fn.sixMusicBox.transitions()
   
   // plugin defaults
-  $.fn.slideReveal.defaults = {
+  $.fn.sixMusicBox.defaults = {
     titleClass: 'info',
     bgClass: 'bgimg',
     startWidth: '27',
@@ -275,7 +275,7 @@
   };
   
   function log() {
-    window.console && console.log && console.log('[slideReveal] ' + Array.prototype.join.call(arguments,' '));
+    window.console && console.log && console.log('[sixMusicBox] ' + Array.prototype.join.call(arguments,' '));
   } 
   
 })( jQuery );
